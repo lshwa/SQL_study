@@ -40,4 +40,4 @@
 
 ## 서브쿼리 문제풀이
 ### Q1. 많이 주문한 테이블 찾기 
-![alt text](image/Week0_1.jpg)
+![alt text](../image/Week0_1.jpg)
