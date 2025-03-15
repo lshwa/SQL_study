@@ -39,6 +39,5 @@
 > 4번 문제의 해결을 위해 CTE나 파생 테이블(WITH)을 사용해야함. 
 
 ## 서브쿼리 문제풀이
-![alt text](6205F375-CA1C-4D4E-A1DE-484CBF7EF6D6.jpeg)
-
-
+### Q1. 많이 주문한 테이블 찾기 
+![alt text](Week0_1.jpg)
