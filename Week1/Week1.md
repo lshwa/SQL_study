@@ -185,5 +185,11 @@ SELECT JSON_OBJECTAGG(c, i) FROM t;
 
 
 
+---
+
+## 윈도우 함수 문제풀이
+
+### Q1. Rank Scores
+
 
 
