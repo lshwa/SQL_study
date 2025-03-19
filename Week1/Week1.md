@@ -190,6 +190,20 @@ SELECT JSON_OBJECTAGG(c, i) FROM t;
 ## 윈도우 함수 문제풀이
 
 ### Q1. Rank Scores
+![alt text](../image/Week1_1.jpg)
 
+> Q1. Rank Score 해결방법 
+우선 문제의 조건에 점수는 높은 순서에서 낮은 순서로 가기에 RANK 관련 함수를 써야하는 것을 알았고, 동점자가 있으면 같은 순위 그 이후에 다음 순위와의 공백이 없다는 것을 참고하여 'DENSE_RANK()' 라는 집계함수를 사용했다. 처음에는 With 절을 사용해 Rank와 Score를 저장한 가상 테이블을 만들고 하려 했다. 코드는 다음과 같았다. 
+~~~sql
+ WITH RankScores AS (
+    SELECT score, DENSE_RANK() OVER (ORDER BY score DESC) AS `rank`
+    FROM Scores
+)
+SELECT score, `rank`
+FROM RankScores
+ORDER BY score DESC;
+
+하지만 리프코드에서 SQL 버전이 MySQL 8.0 이상을 지원못한다고 하여 이 방법을 사용할 수 없었고, **Week1.sql** 파일에 적은 방법으로 해결하였다. 
+<u>처음에 별칭을 rank로 지정하니 이미 rank는 집계함수가 있기에 이를 별칭으로 사용할 수 없다는 오류가 떴다. 그렇기에 키워드를 별칭으로 쓰면 안된다는 것을 깨달았고, 여기서는 구분을 해주기 위해 작은 따옴표를 붙여서 해결하였다.  </u>
 
 
