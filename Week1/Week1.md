@@ -209,5 +209,17 @@ ORDER BY score DESC;
 
 <u>처음에 별칭을 rank로 지정하니 이미 rank는 집계함수가 있기에 이를 별칭으로 사용할 수 없다는 오류가 떴다. 그렇기에 키워드를 별칭으로 쓰면 안된다는 것을 깨달았고, 여기서는 구분을 해주기 위해 작은 따옴표를 붙여서 해결하였다.</u>
 
+---
+### Q2. 다음날도 서울숲의 미세먼지 농도는 나쁨
+![alt text](../image/Week1_2.jpg)
 
+> Q2 문제 해결 방법
+자기 자신의 데이터와 다음날의 데이터를 비교해야한다는 점에서 자기 스스로의 테이블을 셀프 조인해서 재귀형식을 사용하는 방법이 제일 먼저 생각났었다. 하지만 배운 윈도우 함수를 적용하기 위해 개념정리에서 배웠던 문법을 활용하여 WITH 내에 가상테이블을 만들고 난 이후에 
+
+~~~sql
+      LEAD(measured_at) OVER (PARTITION BY station ORDER BY measured_at) AS next_day,
+      LEAD(pm10) OVER (PARTITION BY station ORDER BY measured_at) AS next_pm10
+~~~
+
+를 활용해 현재 날짜의 다음 날짜와 다음날의 미세먼지 농도를 Window Function을 사용해 추가하였고, 문제에 맞게 next_day, next_pm10으로 별칭을 지어주었다. 그 이후에 WHERE 조건을 메인 쿼리에 단순히 추가함으로써 다음날 미세먼지 농도가 증가한 경우를 선택하는 방법을 활용했다. 
 
