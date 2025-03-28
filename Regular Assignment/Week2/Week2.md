@@ -128,7 +128,7 @@ GROUP BY id, val;
 ### Q1. 저자별 카테고리 별 매출액 집계하기
 
 <!-- Q1 문제 해결 사진 첨부 -->
-
+![alt text](../../image/Week2_1.jpg)
 
 
 - 해결방법
@@ -151,7 +151,7 @@ JOIN BOOK_SALES s
 ### Q2. 언어별 개발자 분류하기
 
 <!-- Q2 문제 해결 이미지 넣기 -->
-
+![alt text](../../image/Week2_2.jpg)
 
 
 - 해결방법
