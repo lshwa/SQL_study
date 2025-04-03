@@ -327,7 +327,7 @@ MySQL에서 문자열 비교의 기준은 **사전순(lexicographical order, 사
 ### Q1. 삼각형 종류 분류하기
 
 <!-- Q1 이미지 첨가 -->
-
+![alt text](../../image/Week3_1.png)
 
 
 - 해결방법
@@ -347,7 +347,7 @@ MySQL에서 문자열 비교의 기준은 **사전순(lexicographical order, 사
 ### Q2. find-customer-referee
 
 <!-- Q1 이미지 첨가 -->
-
+![alt text](../../image/Week3_2.png)
 
 
 - 해결방법
