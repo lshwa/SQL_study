@@ -7,8 +7,7 @@
 GROUP_CONCAT() : 이 함수는 **같은 그룹에 속한 값들을 연결(concatenate)**하여 하나의 문자열로 반환하는 함수이다. 주로, GROUP BY와 함께 사용하고 그룹별 데이터를 하나의 행으로 요약할 때 유용하다. 
 
 <!-- concat 이미지 첨가 -->
-
-
+![alt text](../../image/Week4_1.png)
 
 
 
@@ -79,6 +78,7 @@ CONCAT 함수 참고사항
 
 <!-- Q1 답 -->
 
+![alt text](../../image/Week4_2.png)
 
 
 
