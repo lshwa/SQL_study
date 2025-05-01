@@ -6,3 +6,18 @@ WHERE NAME IN ('Milk', 'Yogurt')
 GROUP BY CART_ID
 HAVING GROUP_CONCAT(DISTINCT NAME ORDER BY NAME) = 'Milk,Yogurt'
 ORDER BY CART_ID;
+
+-- Q3. 입양 시각 구하기 
+
+WITH RECURSIVE time AS (
+    SELECT 0 AS hour
+    UNION ALL
+    SELECT hour + 1 FROM time WHERE hour < 23
+)
+SELECT t.hour AS HOUR, COUNT(a.ANIMAL_ID) AS COUNT
+FROM time t
+LEFT JOIN ANIMAL_OUTS a 
+    ON HOUR(a.DATETIME) = t.hour
+GROUP BY t.hour
+ORDER BY t.hour;
+
