@@ -60,13 +60,42 @@ CONCAT 함수 참고사항
 
 ---
 
+### CTE(WITH RECURSIVE)
+
+WITH RECURSIVE : **재귀적 CTE**를 정의할 때 사용한다. **자기 자신을 참조하면서 계층적 구조나 반복적인 계산을 수행할 수 있게 해준다.**
+
+- 기본 문법
+
+~~~mysql
+WITH RECURSIVE cte_name (column_list) AS (
+    -- Anchor member (초기값)
+    SELECT ...
+    UNION [ALL]
+    -- Recursive member (자기 참조)
+    SELECT ... FROM cte_name WHERE ...
+)
+SELECT * FROM cte_name;
+~~~
+
+Anchor member : 재귀의 시작점으로 초기 결과를 말함.
+
+Recursve member : 이전 결과를 참조하여 다음 결과를 생성한다.
+
+UNION / UNION ALL : 결과를 합친다. 
+
+> UNION : 중복 제거 / UNION ALL : 중복 허용
+
+종료 조건 : 재귀를 할 때는 **무한 루프**를 돌지 않도록 재귀의 종료 조건을 무조건 명시해야함. 
 
 
 
+요약 (CTE)
 
+WITH RECURSIVE는 **자기 자신을 반복해서 호출할 수 있는 SQL문**, 주로 재귀구조는 계층 구조나(트리 형태의 자료구조), 순차적 데이터 , 그래프 탐색에서 사용된다. 
 
+즉, 어떤 데이터가 **자기 자신을 참조하면서 계속 확장**되어야 할 때 사용해야한다.
 
-
+대표적인 예시를 들면 학교 교육과정에 선수과목이 있는 상황에서는 자기 자신을 계속 재귀하면서 선수과목부터 끝 과목까지 연결할 수 있을 것이다. 
 
 
 
@@ -79,8 +108,6 @@ CONCAT 함수 참고사항
 <!-- Q1 답 -->
 
 ![alt text](../../image/Week4_2.png)
-
-
 
 
 
@@ -102,3 +129,60 @@ ORDER BY CART_ID;
 
 
 
+### Q2. 언어별 개발자 분류하기 
+
+- 해결방법
+
+개발자의 스킬 정보를 문자열로 변환한 후에 문자열 비교를 부여하는 구조로 진행했다. 이미 기술 스킬 목록을 문자열로 만들었기 때문에 특정 조건에 따라서 GRADE를 지정하고, 그 결과를 GRADE, ID, EMAIL 순으로 출력하도록 했다. 
+
+~~~mysql
+WITH DEVELOPER_SKILLS AS (
+    SELECT
+        d.ID,
+        d.EMAIL,
+        GROUP_CONCAT(s.NAME ORDER BY s.NAME) AS SKILL_LIST
+    FROM DEVELOPERS d
+    JOIN SKILLCODES s
+        ON d.SKILL_CODE & s.CODE
+    GROUP BY d.ID, d.EMAIL
+),
+SKILL_GRADE AS (
+    SELECT
+        ID,
+        EMAIL,
+        CASE
+            WHEN SKILL_LIST LIKE '%Front End%' AND SKILL_LIST LIKE '%Python%' THEN 'A'
+            WHEN SKILL_LIST LIKE '%C#%' THEN 'B'
+            WHEN SKILL_LIST LIKE '%Front End%' THEN 'C'
+            ELSE NULL
+        END AS GRADE
+    FROM (
+        SELECT ds.ID, ds.EMAIL, 
+               GROUP_CONCAT(sc.CATEGORY) AS SKILL_LIST
+        FROM DEVELOPER_SKILLS ds
+        JOIN SKILLCODES sc
+            ON FIND_IN_SET(sc.NAME, ds.SKILL_LIST)
+        GROUP BY ds.ID, ds.EMAIL
+    ) t
+)
+SELECT GRADE, ID, EMAIL
+FROM SKILL_GRADE
+WHERE GRADE IS NOT NULL
+ORDER BY GRADE, ID;
+~~~
+
+
+
+### Q3. 입양 시각 구하기(2) 
+
+<!-- Q3 답 -->
+
+
+
+
+
+- 해결방법 
+
+입양 기록이 있는지 없는지에 관계없이 0시부터 23시까지 모든 시간대에 입양 건수를 구하는 것이 목표이기 때문에 시간을 저장해주는 임시 테이블을 생성했다. 0부터 시작하여 하나씩 증가하는 값들을 다 재귀적으로 생성하였고, 23보다 작다는 조건으로 재귀의 탈출 조건을 작성하였다. 그리고 이 값은 UNION ALL로 통해서 작성하였다. 
+
+메인 쿼리에서는 시간값 테이블과 ANIMAL_OUTS 테이블과의 조인을 진행하고 시간대에 입양된 동물 들을 연결하였다. 그 이후에 동물이 있는 경우와 없는 경우를 COUNT로 세서 계산하였고, 시간대별로 그룹핑해서 건수를 계산하여 마지막 조건에 맞게 시간대 순으로 정렬을 하여 출력하도록 하였다. 
