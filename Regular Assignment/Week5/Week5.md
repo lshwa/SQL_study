@@ -176,7 +176,7 @@ REGEXP_SUBSTR(expr, pattern [, pos [, occurrence [, match_type]]])
 
 ### Q1. 서울에 위치한 식당 목록 출력하기
 
-
+![alt text](../../image/Week5_1.png)
 
 - 해결방법
 
@@ -191,7 +191,7 @@ REGEXP_SUBSTR(expr, pattern [, pos [, occurrence [, match_type]]])
 
 
 ### Q2. 부모의 형질을 모두 가지는 대장균 찾기 
-
+![alt text](../../image/Week5_2.png)
 
 
 - 해결방법
